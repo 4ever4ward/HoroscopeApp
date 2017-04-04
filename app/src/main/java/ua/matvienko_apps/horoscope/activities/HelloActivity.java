@@ -36,7 +36,7 @@ public class HelloActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 int year = brdDatePicker.getYear();
-                int month = brdDatePicker.getMonth();
+                int month = brdDatePicker.getMonth() + 1;
                 int day = brdDatePicker.getDayOfMonth();
 
                 editor.putInt(BRD_YEAR, year);
@@ -46,6 +46,10 @@ public class HelloActivity extends AppCompatActivity {
                 editor.apply();
 
                 Intent intent = new Intent(HelloActivity.this, MainActivity.class);
+                Bundle bundle = new Bundle();
+                intent.putExtra("year", year);
+                intent.putExtra("month", month);
+                intent.putExtra("day", day);
                 startActivity(intent);
                 finish();
 

@@ -24,8 +24,8 @@ public class AppDBHelper extends SQLiteOpenHelper {
                 + AppDBContract.ForecastEntries.COLUMN_BUSINESS + " INTEGER NOT NULL, "
                 + AppDBContract.ForecastEntries.COLUMN_LOVE + " INTEGER NOT NULL, "
                 + AppDBContract.ForecastEntries.COLUMN_HEALTH + " INTEGER NOT NULL, "
-                + AppDBContract.ForecastEntries.COLUMN_TYPE + " INTEGER NOT NULL, "
-                + AppDBContract.ForecastEntries.COLUMN_SIGN + " INTEGER NOT NULL " + " );";
+                + AppDBContract.ForecastEntries.COLUMN_PERIOD + " TEXT NOT NULL, "
+                + AppDBContract.ForecastEntries.COLUMN_SIGN + " TEXT NOT NULL " + " );";
 
         db.execSQL(createForecastTableQuery);
     }

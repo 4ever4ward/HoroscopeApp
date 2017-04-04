@@ -6,39 +6,39 @@ package ua.matvienko_apps.horoscope;
 
 public class Forecast {
 
-    public static final int FOR_TODAY = 101;
-    public static final int FOR_TOMORROW = 102;
-    public static final int FOR_WEEK = 103;
-    public static final int FOR_MONTH = 104;
-    public static final int FOR_YEAR = 105;
+    public static final String TODAY = "today";
+    public static final String TOMORROW = "tomorrow";
+    public static final String WEEK = "week";
+    public static final String MONTH = "month";
+    public static final String YEAR = "year";
 
-    public static final int AQUARIUS = 1201;
-    public static final int PISCES = 1202;
-    public static final int ARIES = 1203;
-    public static final int TAURUS = 1204;
-    public static final int GEMINI = 1205;
-    public static final int CANCER = 1206;
-    public static final int LEO = 1207;
-    public static final int VIRGO = 1208;
-    public static final int LIBRA = 1209;
-    public static final int SCORPIO = 1210;
-    public static final int SAGITTARIUS = 1211;
-    public static final int CAPRICORN = 1212;
+    public static final String AQUARIUS = "aquarius";
+    public static final String PISCES = "pisces";
+    public static final String ARIES = "aries";
+    public static final String TAURUS = "taurus";
+    public static final String GEMINI = "gemini";
+    public static final String CANCER = "cancer";
+    public static final String LEO = "leo";
+    public static final String VIRGO = "virgo";
+    public static final String LIBRA = "libra";
+    public static final String SCORPIO = "scorpio";
+    public static final String SAGITTARIUS = "sagittarius";
+    public static final String CAPRICORN = "capricorn";
 
     private String text;
     private int valueBusiness;
     private int valueLove;
     private int valueHealth;
-    private int forecastType;
-    private int sign;
+    private String forecastPeriod;
+    private String sign;
 
 
-    public Forecast(String text, int valueBusiness, int valueLove, int valueHealth, int forecastType, int sign) {
+    public Forecast(String text, int valueBusiness, int valueLove, int valueHealth, String forecastPeriod, String sign) {
         this.text = text;
         this.valueBusiness = valueBusiness;
         this.valueLove = valueLove;
         this.valueHealth = valueHealth;
-        this.forecastType = forecastType;
+        this.forecastPeriod = forecastPeriod;
         this.sign = sign;
     }
 
@@ -66,16 +66,16 @@ public class Forecast {
     public void setValueHealth(int valueHealth) {
         this.valueHealth = valueHealth;
     }
-    public int getForecastType() {
-        return forecastType;
+    public String getForecastPeriod() {
+        return forecastPeriod;
     }
-    public void setForecastType(int forecastType) {
-        this.forecastType = forecastType;
+    public void setForecastPeriod(String forecastPeriod) {
+        this.forecastPeriod = forecastPeriod;
     }
-    public int getSign() {
+    public String getSign() {
         return sign;
     }
-    public void setSign(int sign) {
+    public void setSign(String sign) {
         this.sign = sign;
     }
 }

@@ -19,7 +19,7 @@ public class AppDBContract {
         public static final String COLUMN_BUSINESS = "business";
         public static final String COLUMN_LOVE = "love";
         public static final String COLUMN_HEALTH = "health";
-        public static final String COLUMN_TYPE = "type";
+        public static final String COLUMN_PERIOD = "period";
         public static final String COLUMN_SIGN = "sign";
     }
 

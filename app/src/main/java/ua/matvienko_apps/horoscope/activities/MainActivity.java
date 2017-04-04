@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -19,28 +20,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import ua.matvienko_apps.horoscope.R;
+import ua.matvienko_apps.horoscope.data.DataProvider;
 
 public class MainActivity extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    public static String TAG = MainActivity.class.getSimpleName();
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
+
+    private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+
+    private int brd_year;
+    private int brd_month;
+    private int brd_day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        brd_year = getIntent().getIntExtra("year", 0);
+        brd_month = getIntent().getIntExtra("month", 0);
+        brd_day = getIntent().getIntExtra("day", 0);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -55,12 +56,35 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        new Sync().execute();
+
     }
 
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
+    public class Sync extends AsyncTask {
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+//            new DataProvider(MainActivity.this).
+//                    signIn(Utility.getUUID(MainActivity.this),
+//                            Utility.getZodiacName(brd_month, brd_day),
+//                            brd_day + "." + brd_month + "." + brd_year);
+
+            new DataProvider(MainActivity.this).getForecast();
+
+            return null;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
     public static class ForecastFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
@@ -116,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
 
-
             return rootView;
         }
 
@@ -130,10 +153,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
