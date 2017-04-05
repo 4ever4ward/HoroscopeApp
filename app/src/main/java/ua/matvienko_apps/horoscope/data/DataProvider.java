@@ -2,8 +2,8 @@ package ua.matvienko_apps.horoscope.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.icu.util.Calendar;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ua.matvienko_apps.horoscope.Forecast;
@@ -57,32 +58,32 @@ public class DataProvider {
         this.context = context;
     }
 
-    public void getForecast() {
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(API_URL + "horoscop");
+//    public void getForecast() {
+//        HttpClient httpClient = new DefaultHttpClient();
+//        HttpPost httpPost = new HttpPost(API_URL + "horoscop");
+//
+//        try {
+//            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+//            nameValuePairs.add(new BasicNameValuePair(PARAM_UUID, Utility.getUUID(context)));
+//            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+//
+//            // Execute HTTP Post Request
+//            HttpResponse response = httpClient.execute(httpPost);
+//            String forecastJsonStr = inputStreamToString(response.getEntity().getContent());
+////            Log.e(TAG, "getForecast: " + forecastJsonStr.substring(forecastJsonStr.length() - 200));
+//            parseForecastJson(forecastJsonStr);
+//
+//        } catch (ClientProtocolException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
-        try {
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-            nameValuePairs.add(new BasicNameValuePair(PARAM_UUID, Utility.getUUID(context)));
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-            // Execute HTTP Post Request
-            HttpResponse response = httpClient.execute(httpPost);
-            String forecastJsonStr = inputStreamToString(response.getEntity().getContent());
-            Log.e(TAG, "getForecast: " + forecastJsonStr.substring(forecastJsonStr.length() - 200));
-            parseForecastJson(forecastJsonStr);
-
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void getForecast(String sign) {
+    public Forecast getForecast(String period, String sign) {
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(API_URL + "horoscop");
 
@@ -96,7 +97,7 @@ public class DataProvider {
             HttpResponse response = httpClient.execute(httpPost);
             String forecastJsonStr = inputStreamToString(response.getEntity().getContent());
             Log.e(TAG, "getForecast: " + forecastJsonStr.substring(forecastJsonStr.length() - 200));
-            parseForecastJson(forecastJsonStr);
+            parseForecastJson(forecastJsonStr, sign);
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -107,9 +108,11 @@ public class DataProvider {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        return getForecastFromDB(period, sign);
     }
 
-    public void signIn(String uuid, String sign, String brd_date) {
+    public void signIn(String uuid, String sign, Date brd_date) {
 
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(API_URL + "horoscop");
@@ -118,7 +121,7 @@ public class DataProvider {
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
             nameValuePairs.add(new BasicNameValuePair(PARAM_UUID, Utility.getUUID(context)));
             nameValuePairs.add(new BasicNameValuePair(PARAM_SIGN, sign));
-            nameValuePairs.add(new BasicNameValuePair(PARAM_DOB, brd_date));
+            nameValuePairs.add(new BasicNameValuePair(PARAM_DOB, Utility.normalizeDate(brd_date)));
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             // Execute HTTP Post Request
@@ -135,7 +138,7 @@ public class DataProvider {
         }
     }
 
-    private void parseForecastJson(String forecastJsonStr) throws JSONException {
+    private void parseForecastJson(String forecastJsonStr, String sign) throws JSONException {
 
         final String YEAR = "year";
         final String MONTH = "month";
@@ -148,11 +151,6 @@ public class DataProvider {
                 .getJSONObject(RESPONSE)
                 .getJSONObject(HOROSCOP);
 
-        JSONObject settingsJsonObj = new JSONObject(forecastJsonStr)
-                .getJSONObject(RESPONSE)
-                .getJSONObject(SETTINGS);
-
-        String sign = settingsJsonObj.getString(SIGN);
 
         readForecastObj(horoscopJsonObj.getJSONObject(YEAR), YEAR, sign);
         readForecastObj(horoscopJsonObj.getJSONObject(MONTH), MONTH, sign);
@@ -174,18 +172,19 @@ public class DataProvider {
         int loveValue = forecast.getInt(LOVE_VALUE);
         int healthValue = forecast.getInt(HEALTH_VALUE);
 
-        Log.e(TAG, "readForecastObj: " + forecastPeriod + ": " + forecastText );
-
-        addForecast(new Forecast(forecastText, businessValue, loveValue,
-                healthValue, forecastPeriod, sign));
+        if (getForecastFromDB(forecastPeriod, sign) == null) {
+            addForecast(new Forecast(forecastText, businessValue, loveValue,
+                    healthValue, forecastPeriod, sign));
+        } else {
+            updateForecast(new Forecast(forecastText, businessValue, loveValue,
+                    healthValue, forecastPeriod, sign));
+        }
 
     }
-
 
     private void addForecast(Forecast forecast) {
         SQLiteDatabase db = appDBHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        Calendar calendar = Calendar.getInstance();
 
         contentValues.put(AppDBContract.ForecastEntries.COLUMN_TEXT, forecast.getText());
         contentValues.put(AppDBContract.ForecastEntries.COLUMN_BUSINESS, forecast.getValueBusiness());
@@ -193,21 +192,68 @@ public class DataProvider {
         contentValues.put(AppDBContract.ForecastEntries.COLUMN_HEALTH, forecast.getValueHealth());
         contentValues.put(AppDBContract.ForecastEntries.COLUMN_PERIOD, forecast.getForecastPeriod());
         contentValues.put(AppDBContract.ForecastEntries.COLUMN_SIGN, forecast.getSign());
+        contentValues.put(AppDBContract.ForecastEntries.COLUMN_DATE, Utility.getNowDateString());
 
         db.insert(AppDBContract.ForecastEntries.TABLE_NAME, null, contentValues);
         db.close();
 
     }
 
-    private void getForecastFromDB(String period, String sign) {
+    public Forecast getForecastFromDB (String period, String sign) {
         SQLiteDatabase db = appDBHelper.getReadableDatabase();
+        String query = "SELECT * FROM "
+                + AppDBContract.ForecastEntries.TABLE_NAME
+                + " WHERE "
+                + AppDBContract.ForecastEntries.COLUMN_PERIOD + " = " + "\"" + period + "\""
+                + " AND "
+                + AppDBContract.ForecastEntries.COLUMN_SIGN + " = " + "\"" + sign + "\"";
 
+        Cursor cursor = db.rawQuery(query, null);
+
+        Forecast forecast = null;
+
+        if (cursor.moveToFirst()) {
+            forecast = new Forecast(cursor.getString(1),
+                    cursor.getInt(2),
+                    cursor.getInt(3),
+                    cursor.getInt(4),
+                    cursor.getString(5),
+                    cursor.getString(6));
+        }
+
+        db.close();
+        cursor.close();
+        return forecast;
     }
 
-    private void deleteForecastFromDB() {
+    public void updateForecast(Forecast newForecast) {
         SQLiteDatabase db = appDBHelper.getWritableDatabase();
 
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(AppDBContract.ForecastEntries.COLUMN_TEXT, newForecast.getText());
+        contentValues.put(AppDBContract.ForecastEntries.COLUMN_BUSINESS, newForecast.getValueBusiness());
+        contentValues.put(AppDBContract.ForecastEntries.COLUMN_LOVE, newForecast.getValueLove());
+        contentValues.put(AppDBContract.ForecastEntries.COLUMN_HEALTH, newForecast.getValueHealth());
+        contentValues.put(AppDBContract.ForecastEntries.COLUMN_PERIOD, newForecast.getForecastPeriod());
+        contentValues.put(AppDBContract.ForecastEntries.COLUMN_SIGN, newForecast.getSign());
+        contentValues.put(AppDBContract.ForecastEntries.COLUMN_DATE, Utility.getNowDateString());
+//        contentValues.put(AppDBContract.ForecastEntries.COLUMN_DATE, newForecast.getAddedDate());
+
+
+        db.update(AppDBContract.ForecastEntries.TABLE_NAME, contentValues,
+                AppDBContract.ForecastEntries.COLUMN_PERIOD + " = ? AND "
+                        + AppDBContract.ForecastEntries.COLUMN_SIGN + " = ? ", new String[]{
+                        newForecast.getForecastPeriod(),
+                        newForecast.getForecastPeriod()});
+
+        db.close();
     }
+
+//    private void deleteForecastFromDB() {
+//        SQLiteDatabase db = appDBHelper.getWritableDatabase();
+//
+//    }
 
     private String inputStreamToString(InputStream is) throws IOException {
         String line;

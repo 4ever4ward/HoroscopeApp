@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:key="notification_switch"
+        android:title="Уведомления" />
+
+    <ua.matvienko_apps.horoscope.TimePreference
+        android:key="notification_time"
+        android:title="Время уведомлений"/>
+
+
+
+</PreferenceScreen>

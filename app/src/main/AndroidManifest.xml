@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.HelloActivity" />
+        <activity android:name=".activities.SettingsActivity" />
         <activity
             android:name=".activities.MainActivity"
             android:label=""

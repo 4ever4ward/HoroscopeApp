@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#2c3565</color>
-    <color name="colorPrimaryDark">#171d36</color>
+    <color name="colorPrimaryDark">#232a50</color>
     <color name="colorAccent">#FF4081</color>
     <!--TODO: delete-->
     <color name="TestBackgrounColor">#2c2968</color>

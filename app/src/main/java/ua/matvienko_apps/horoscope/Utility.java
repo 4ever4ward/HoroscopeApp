@@ -3,6 +3,8 @@ package ua.matvienko_apps.horoscope;
 import android.content.Context;
 import android.provider.Settings;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -35,8 +37,11 @@ public class Utility {
     }
 
     public static String getNowDateString() {
+        return new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+    }
 
-        return null;
+    public static String normalizeDate(Date date) {
+        return new SimpleDateFormat("dd.MM.yyyy").format(date);
     }
 
     public static String getZodiacName(int brd_month, int brd_day) {
@@ -69,5 +74,6 @@ public class Utility {
 
         return "";
     }
+
 
 }
