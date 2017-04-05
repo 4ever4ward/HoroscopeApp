@@ -19,7 +19,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?attr/colorPrimary">
+            android:background="@color/colorPrimary">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -38,7 +38,9 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginRight="15dp" />
+                    android:layout_marginRight="15dp"
+                    android:spinnerMode="dialog"
+                    android:entries="@array/spinner_signs"/>
 
                 <ImageView
                     android:id="@+id/settings_icon"

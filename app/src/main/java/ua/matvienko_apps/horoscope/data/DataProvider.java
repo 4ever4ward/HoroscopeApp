@@ -82,6 +82,33 @@ public class DataProvider {
 
     }
 
+    public void getForecast(String sign) {
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(API_URL + "horoscop");
+
+        try {
+            List<NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair(PARAM_UUID, Utility.getUUID(context)));
+            nameValuePairs.add(new BasicNameValuePair(PARAM_SIGN, sign));
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+
+            HttpResponse response = httpClient.execute(httpPost);
+            String forecastJsonStr = inputStreamToString(response.getEntity().getContent());
+            Log.e(TAG, "getForecast: " + forecastJsonStr.substring(forecastJsonStr.length() - 200));
+            parseForecastJson(forecastJsonStr);
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void signIn(String uuid, String sign, String brd_date) {
 
         HttpClient httpClient = new DefaultHttpClient();
@@ -147,16 +174,15 @@ public class DataProvider {
         int loveValue = forecast.getInt(LOVE_VALUE);
         int healthValue = forecast.getInt(HEALTH_VALUE);
 
-
         Log.e(TAG, "readForecastObj: " + forecastPeriod + ": " + forecastText );
 
-//        addForecast(new Forecast(forecastText, businessValue, loveValue,
-//                healthValue, forecastPeriod, sign));
+        addForecast(new Forecast(forecastText, businessValue, loveValue,
+                healthValue, forecastPeriod, sign));
 
     }
 
 
-    public void addForecast(Forecast forecast) {
+    private void addForecast(Forecast forecast) {
         SQLiteDatabase db = appDBHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         Calendar calendar = Calendar.getInstance();
@@ -168,9 +194,12 @@ public class DataProvider {
         contentValues.put(AppDBContract.ForecastEntries.COLUMN_PERIOD, forecast.getForecastPeriod());
         contentValues.put(AppDBContract.ForecastEntries.COLUMN_SIGN, forecast.getSign());
 
+        db.insert(AppDBContract.ForecastEntries.TABLE_NAME, null, contentValues);
+        db.close();
+
     }
 
-    private void getForecastFromDB(String type, String sign) {
+    private void getForecastFromDB(String period, String sign) {
         SQLiteDatabase db = appDBHelper.getReadableDatabase();
 
     }

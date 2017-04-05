@@ -3,4 +3,21 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
+
+    <!--Spinner entries-->
+    <string-array name="spinner_signs">
+        <item>Водолей</item>
+        <item>Рыбы</item>
+        <item>Овен</item>
+        <item>Телец</item>
+        <item>Близнецы</item>
+        <item>Рак</item>
+        <item>Лев</item>
+        <item>Дева</item>
+        <item>Весы</item>
+        <item>Скорпион</item>
+        <item>Стрелец</item>
+        <item>Козерог</item>
+    </string-array>
+
 </resources>

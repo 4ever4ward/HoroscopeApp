@@ -21,6 +21,7 @@ public class AppDBContract {
         public static final String COLUMN_HEALTH = "health";
         public static final String COLUMN_PERIOD = "period";
         public static final String COLUMN_SIGN = "sign";
+        public static final String COLUMN_DATE = "date";
     }
 
 }

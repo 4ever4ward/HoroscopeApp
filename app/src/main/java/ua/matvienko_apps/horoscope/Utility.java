@@ -34,6 +34,11 @@ public class Utility {
         return uuid;
     }
 
+    public static String getNowDateString() {
+
+        return null;
+    }
+
     public static String getZodiacName(int brd_month, int brd_day) {
 
         // TODO: change string's to real constant's
