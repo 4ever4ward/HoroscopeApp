@@ -24,18 +24,11 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private Spinner signSpinner;
 
-    private int brd_year;
-    private int brd_month;
-    private int brd_day;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        brd_year = getIntent().getIntExtra("year", 0);
-        brd_month = getIntent().getIntExtra("month", 0);
-        brd_day = getIntent().getIntExtra("day", 0);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

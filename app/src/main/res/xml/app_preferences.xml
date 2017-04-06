@@ -3,12 +3,13 @@
 
     <SwitchPreference
         android:key="notification_switch"
-        android:title="Уведомления" />
+        android:title="Уведомления"
+        android:background="@drawable/background"/>
 
     <ua.matvienko_apps.horoscope.TimePreference
         android:key="notification_time"
-        android:title="Время уведомлений"/>
-
+        android:title="Время уведомлений"
+        android:defaultValue="00:00"/>
 
 
 </PreferenceScreen>

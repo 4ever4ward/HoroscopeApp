@@ -3,13 +3,21 @@ package ua.matvienko_apps.horoscope.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import ua.matvienko_apps.horoscope.data.DataProvider;
 
 public class SplashActivity extends AppCompatActivity {
 
+    public static String TAG = SplashActivity.class.getSimpleName();
+
     public static String APP_PREFERENCES;
     public static final String HAS_VISITED = "HasVisited";
+
+    private boolean visited = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,21 +26,48 @@ public class SplashActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        Intent intent = null;
-
-//        if(!sharedPreferences.getBoolean(HAS_VISITED, false)) {
-//            editor.putBoolean(HAS_VISITED, true);
-//            editor.apply();
-
-            intent = new Intent(this, HelloActivity.class);
-
-//        } else {
-
-//            intent = new Intent(this, MainActivity.class);
-//        }
-
-        startActivity(intent);
-        finish();
+        new isVisited(SplashActivity.this).execute();
 
     }
+
+
+    private class isVisited extends AsyncTask<Void, Void, Void> {
+
+        private Context context;
+        private DataProvider dataProvider;
+
+        public isVisited(Context context) {
+            this.context = context;
+            dataProvider = new DataProvider(context);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            visited = dataProvider.isVisited();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            Intent intent;
+
+            Log.e(TAG, "SplashActivity: onPostExecute: " + visited);
+
+            if (visited) {
+                intent = new Intent(context, MainActivity.class);
+            } else {
+                intent = new Intent(context, HelloActivity.class);
+            }
+
+            startActivity(intent);
+            finish();
+
+        }
+    }
+
+
+
+
 }

@@ -58,30 +58,32 @@ public class DataProvider {
         this.context = context;
     }
 
-//    public void getForecast() {
-//        HttpClient httpClient = new DefaultHttpClient();
-//        HttpPost httpPost = new HttpPost(API_URL + "horoscop");
-//
-//        try {
-//            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-//            nameValuePairs.add(new BasicNameValuePair(PARAM_UUID, Utility.getUUID(context)));
-//            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-//
-//            // Execute HTTP Post Request
-//            HttpResponse response = httpClient.execute(httpPost);
-//            String forecastJsonStr = inputStreamToString(response.getEntity().getContent());
-////            Log.e(TAG, "getForecast: " + forecastJsonStr.substring(forecastJsonStr.length() - 200));
-//            parseForecastJson(forecastJsonStr);
-//
-//        } catch (ClientProtocolException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
+    public boolean isVisited() {
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(API_URL + "horoscop");
+
+        try {
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+            nameValuePairs.add(new BasicNameValuePair(PARAM_UUID, Utility.getUUID(context)));
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            // Execute HTTP Post Request
+            HttpResponse response = httpClient.execute(httpPost);
+            String forecastJsonStr = inputStreamToString(response.getEntity().getContent());
+//            Log.e(TAG, "getForecast: " + forecastJsonStr.substring(forecastJsonStr.length() - 200));
+
+            return getSuccess(forecastJsonStr);
+
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
 
     public Forecast getForecast(String period, String sign) {
         HttpClient httpClient = new DefaultHttpClient();
@@ -96,7 +98,6 @@ public class DataProvider {
 
             HttpResponse response = httpClient.execute(httpPost);
             String forecastJsonStr = inputStreamToString(response.getEntity().getContent());
-            Log.e(TAG, "getForecast: " + forecastJsonStr.substring(forecastJsonStr.length() - 200));
             parseForecastJson(forecastJsonStr, sign);
 
         } catch (UnsupportedEncodingException e) {
@@ -112,7 +113,7 @@ public class DataProvider {
         return getForecastFromDB(period, sign);
     }
 
-    public void signIn(String uuid, String sign, Date brd_date) {
+    public boolean signIn(String sign, Date brd_date) {
 
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(API_URL + "horoscop");
@@ -129,13 +130,25 @@ public class DataProvider {
             String forecastJsonStr = inputStreamToString(response.getEntity().getContent());
             Log.e(TAG, "signIn: " + forecastJsonStr);
 
+            return getSuccess(forecastJsonStr);
+
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+        return false;
+    }
+
+    public boolean getSuccess(String forecastJsonStr) throws JSONException {
+        int success_value = new JSONObject(forecastJsonStr).getInt(SUCCESS);
+
+        return success_value == 1;
     }
 
     private void parseForecastJson(String forecastJsonStr, String sign) throws JSONException {
@@ -249,11 +262,6 @@ public class DataProvider {
 
         db.close();
     }
-
-//    private void deleteForecastFromDB() {
-//        SQLiteDatabase db = appDBHelper.getWritableDatabase();
-//
-//    }
 
     private String inputStreamToString(InputStream is) throws IOException {
         String line;
