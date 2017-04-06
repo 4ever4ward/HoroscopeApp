@@ -7,23 +7,57 @@
     android:background="@drawable/background"
     tools:context="ua.matvienko_apps.horoscope.activities.HelloActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:textColor="@android:color/white"
+        android:text="Здравствуйте!"/>
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_marginTop="120dp"
+        android:textColor="@android:color/white"
+        android:text="Мы составим гороскоп персонально для вас"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_marginTop="200dp"
+        android:textColor="@android:color/white"
+        android:text="Дата вашего рождения:"/>
+
+
     <DatePicker
         android:id="@+id/brdDatePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="75dp"
+        android:layout_gravity="center"
         android:calendarViewShown="false"
+        android:layout_marginTop="35dp"
         android:datePickerMode="spinner"
-        android:spinnersShown="true"
-        android:layout_gravity="center"/>
+        android:spinnersShown="true" />
 
 
     <Button
         android:id="@+id/nextBtn"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="75dp"
         android:layout_gravity="center"
+        android:layout_marginTop="205dp"
+        android:background="@drawable/button_next"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
         android:text="Продолжить" />
 
 

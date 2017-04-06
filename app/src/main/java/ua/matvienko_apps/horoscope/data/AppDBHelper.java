@@ -35,6 +35,7 @@ public class AppDBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < newVersion) {
             db.execSQL("DROP TABLE IF EXISTS " + AppDBContract.ForecastEntries.TABLE_NAME);
+            onCreate(db);
         }
     }
 }

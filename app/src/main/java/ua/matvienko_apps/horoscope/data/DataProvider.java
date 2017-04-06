@@ -29,8 +29,6 @@ import java.util.List;
 import ua.matvienko_apps.horoscope.Forecast;
 import ua.matvienko_apps.horoscope.Utility;
 
-import static ua.matvienko_apps.horoscope.activities.MainActivity.TAG;
-
 /**
  * Created by alex_ on 04-Apr-17.
  */
@@ -46,11 +44,12 @@ public class DataProvider {
     private final String PARAM_DOB = "dob";
 
 
+    public static final String SIGN = "sign";
+    public static final String NOT_TIME = "notification_time";
+    public static final String NOT_STATUS = "notification_status";
+    public static final String DOB = "dob";
+
     private final String RESPONSE = "response";
-    private final String HOROSCOP = "horoscop";
-    private final String SETTINGS = "settings";
-    private final String SIGN = "sign";
-    private final String SUCCESS = "success";
 
     public DataProvider(Context context) {
         this.appDBHelper = new AppDBHelper(context, AppDBContract.DB_NAME,
@@ -70,7 +69,6 @@ public class DataProvider {
             // Execute HTTP Post Request
             HttpResponse response = httpClient.execute(httpPost);
             String forecastJsonStr = inputStreamToString(response.getEntity().getContent());
-//            Log.e(TAG, "getForecast: " + forecastJsonStr.substring(forecastJsonStr.length() - 200));
 
             return getSuccess(forecastJsonStr);
 
@@ -83,6 +81,43 @@ public class DataProvider {
         }
 
         return true;
+    }
+
+    public String getSettings(String param) {
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(API_URL + "horoscop");
+
+        try {
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+            nameValuePairs.add(new BasicNameValuePair(PARAM_UUID, Utility.getUUID(context)));
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            // Execute HTTP Post Request
+            HttpResponse response = httpClient.execute(httpPost);
+            String settingsJsonStr = inputStreamToString(response.getEntity().getContent());
+
+            return parseSettingsJson(settingsJsonStr, param);
+
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
+    private String parseSettingsJson(String settingsJsonString, String param) throws JSONException {
+        final String SETTINGS = "settings";
+
+        JSONObject settingsJsonObj = new JSONObject(settingsJsonString)
+                .getJSONObject(RESPONSE)
+                .getJSONObject(SETTINGS);
+
+        return settingsJsonObj.getString(param);
+
     }
 
     public Forecast getForecast(String period, String sign) {
@@ -99,6 +134,8 @@ public class DataProvider {
             HttpResponse response = httpClient.execute(httpPost);
             String forecastJsonStr = inputStreamToString(response.getEntity().getContent());
             parseForecastJson(forecastJsonStr, sign);
+
+            Log.e("dskfjskljf", "getForecast: " + forecastJsonStr.substring(forecastJsonStr.length() - 200) );
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -128,7 +165,6 @@ public class DataProvider {
             // Execute HTTP Post Request
             HttpResponse response = httpClient.execute(httpPost);
             String forecastJsonStr = inputStreamToString(response.getEntity().getContent());
-            Log.e(TAG, "signIn: " + forecastJsonStr);
 
             return getSuccess(forecastJsonStr);
 
@@ -145,7 +181,8 @@ public class DataProvider {
         return false;
     }
 
-    public boolean getSuccess(String forecastJsonStr) throws JSONException {
+    private boolean getSuccess(String forecastJsonStr) throws JSONException {
+        String SUCCESS = "success";
         int success_value = new JSONObject(forecastJsonStr).getInt(SUCCESS);
 
         return success_value == 1;
@@ -160,6 +197,7 @@ public class DataProvider {
         final String TODAY = "today";
 
 
+        String HOROSCOP = "horoscop";
         JSONObject horoscopJsonObj = new JSONObject(forecastJsonStr)
                 .getJSONObject(RESPONSE)
                 .getJSONObject(HOROSCOP);
@@ -212,7 +250,7 @@ public class DataProvider {
 
     }
 
-    public Forecast getForecastFromDB (String period, String sign) {
+    private Forecast getForecastFromDB (String period, String sign) {
         SQLiteDatabase db = appDBHelper.getReadableDatabase();
         String query = "SELECT * FROM "
                 + AppDBContract.ForecastEntries.TABLE_NAME
@@ -239,7 +277,7 @@ public class DataProvider {
         return forecast;
     }
 
-    public void updateForecast(Forecast newForecast) {
+    private void updateForecast(Forecast newForecast) {
         SQLiteDatabase db = appDBHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();

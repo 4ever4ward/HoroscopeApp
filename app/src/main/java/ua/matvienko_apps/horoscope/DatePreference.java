@@ -1,22 +1,27 @@
 package ua.matvienko_apps.horoscope;
 
+/**
+ * Created by Alexandr on 07/04/2017.
+ */
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.preference.DialogPreference;
-import android.text.format.DateFormat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TimePicker;
+import android.widget.DatePicker;
 
 import java.util.Calendar;
-import java.util.Date;
 
-public class TimePreference extends DialogPreference {
-    private int lastHour = 0;
-    private int lastMinute = 0;
-    private TimePicker picker = null;
+
+public class DatePreference extends DialogPreference {
+
+    private int lastDay = 1;
+    private int lastMonth = 1;
+    private int lastYear = 2000;
+    private DatePicker picker = null;
 
     @Override
     protected View onCreateView(ViewGroup parent) {
@@ -25,19 +30,25 @@ public class TimePreference extends DialogPreference {
         return li.inflate(R.layout.time_preference, parent, false);
     }
 
-    public static int getHour(String time) {
-        String[] pieces = time.split(":");
+    public static int getYear(String date) {
+        String[] pieces = date.split("\\.");
 
-        return (Integer.parseInt(pieces[0]));
+        return (Integer.parseInt(pieces[2]));
     }
 
-    public static int getMinute(String time) {
-        String[] pieces = time.split(":");
+    public static int getMonth(String date) {
+        String[] pieces = date.split("\\.");
 
         return (Integer.parseInt(pieces[1]));
     }
 
-    public TimePreference(Context ctxt, AttributeSet attrs) {
+    public static int getDay(String date) {
+        String[] pieces = date.split("\\.");
+
+        return (Integer.parseInt(pieces[0]));
+    }
+
+    public DatePreference(Context ctxt, AttributeSet attrs) {
         super(ctxt, attrs);
 
         setPositiveButtonText("Готово");
@@ -46,8 +57,7 @@ public class TimePreference extends DialogPreference {
 
     @Override
     protected View onCreateDialogView() {
-        picker = new TimePicker(getContext());
-        picker.setIs24HourView(true);
+        picker = new DatePicker(getContext());
         return (picker);
     }
 
@@ -55,8 +65,7 @@ public class TimePreference extends DialogPreference {
     protected void onBindDialogView(View v) {
         super.onBindDialogView(v);
 
-        picker.setCurrentHour(lastHour);
-        picker.setCurrentMinute(lastMinute);
+        picker.init(lastYear, lastMonth, lastDay, null);
     }
 
     @Override
@@ -64,13 +73,17 @@ public class TimePreference extends DialogPreference {
         super.onDialogClosed(positiveResult);
 
         if (positiveResult) {
-            lastHour = picker.getCurrentHour();
-            lastMinute = picker.getCurrentMinute();
+//            lastHour = picker.getCurrentHour();
+//            lastMinute = picker.getCurrentMinute();
 
-            String time = String.valueOf(lastHour) + ":" + String.valueOf(lastMinute);
+            lastDay = picker.getDayOfMonth();
+            lastMonth = picker.getMonth();
+            lastYear = picker.getYear();
 
-            if (callChangeListener(time)) {
-                persistString(time);
+            String date = String.valueOf(lastDay) + "." + String.valueOf(lastMonth) + "." + String.valueOf(lastYear);
+
+            if (callChangeListener(date)) {
+                persistString(date);
             }
         }
 
@@ -85,20 +98,21 @@ public class TimePreference extends DialogPreference {
 
     @Override
     protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-        String time = null;
+        String date = null;
 
         if (restoreValue) {
             if (defaultValue == null) {
-                time = getPersistedString("00:00");
+                date = getPersistedString(Utility.getNowDateString());
             } else {
-                time = getPersistedString(defaultValue.toString());
+                date = getPersistedString(defaultValue.toString());
             }
         } else {
-            time = defaultValue.toString();
+            date = defaultValue.toString();
         }
 
-        lastHour = getHour(time);
-        lastMinute = getMinute(time);
+        lastYear = getYear(date);
+        lastMonth = getMonth(date);
+        lastDay = getDay(date);
 
         setSummary(getSummary());
 
@@ -107,7 +121,7 @@ public class TimePreference extends DialogPreference {
     @Override
     public CharSequence getSummary() {
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, lastHour, lastMinute);
-        return DateFormat.getTimeFormat(getContext()).format(new Date(cal.getTimeInMillis()));
+        cal.set(lastYear, lastMonth, lastDay);
+        return Utility.normalizeDate(cal.getTime());
     }
 }

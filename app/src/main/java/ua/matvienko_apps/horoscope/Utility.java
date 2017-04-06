@@ -26,7 +26,8 @@ public class Utility {
 
         uuid = "{ "
                 + "\"bundle_id\":" +  "\"" + bundle_id + "\"" + ","
-                + "\"unique_id\":" + "\"" + device_uuid + "\"" + ","
+                //TODO: change hardcoded string to device_uuid
+                + "\"unique_id\":" + "\"" + "11111111" + "\"" + ","
                 + "\"user_agent\":" + "\"" + user_agent + "\"" + ","
                 + "\"time_zone\":" + "\"" + time_zone + "\"" + ","
                 + "\"device_locale\":" + "\"" + device_locale + "\"" + ","

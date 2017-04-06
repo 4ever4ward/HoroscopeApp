@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:divider="@color/colorLove">
+
+    <PreferenceCategory android:layout="@layout/preference_category"/>
 
     <SwitchPreference
         android:key="notification_switch"
         android:title="Уведомления"
-        android:background="@drawable/background"/>
+        android:background="@drawable/background"
+        android:persistent="true" />
+
+    <PreferenceCategory android:layout="@layout/preference_category"/>
+
 
     <ua.matvienko_apps.horoscope.TimePreference
         android:key="notification_time"
         android:title="Время уведомлений"
-        android:defaultValue="00:00"/>
+        android:persistent="true"/>
+
+    <PreferenceCategory android:layout="@layout/preference_category"/>
+
+    <ua.matvienko_apps.horoscope.DatePreference
+        android:key="birthday_date"
+        android:title="Дата рождения"
+        android:persistent="true"/>
+
+    <PreferenceCategory android:layout="@layout/preference_category"/>
+
+
 
 
 </PreferenceScreen>

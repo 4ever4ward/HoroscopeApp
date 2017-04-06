@@ -2,15 +2,14 @@
 <resources>
     <color name="colorPrimary">#2c3565</color>
     <color name="colorPrimaryDark">#232a50</color>
-    <color name="colorAccent">#FF4081</color>
-    <!--TODO: delete-->
-    <color name="TestBackgrounColor">#2c2968</color>
+    <color name="colorAccent">#969bb3</color>
 
     <color name="colorBusiness">#8fa0ff</color>
     <color name="colorLove">#ff7167</color>
     <color name="colorHealth">#beff74</color>
 
-
+    <color name="colorButtonNext">#445492</color>
+    <color name="colorDividerColor">#7ddad4d4</color>
     <color name="colorBlueRectDark">#6d7dbb</color>
 
 </resources>
