@@ -5,24 +5,24 @@
     <PreferenceCategory android:layout="@layout/preference_category"/>
 
     <SwitchPreference
-        android:key="notification_switch"
-        android:title="Уведомления"
+        android:key="@string/pref_notification_switch"
+        android:title="@string/pref_notification_switch_title"
         android:background="@drawable/background"
         android:persistent="true" />
 
     <PreferenceCategory android:layout="@layout/preference_category"/>
 
 
-    <ua.matvienko_apps.horoscope.TimePreference
-        android:key="notification_time"
-        android:title="Время уведомлений"
+    <ua.matvienko_apps.horoscope.classes.TimePreference
+        android:key="@string/pref_notification_time"
+        android:title="@string/pref_notification_time_title"
         android:persistent="true"/>
 
     <PreferenceCategory android:layout="@layout/preference_category"/>
 
-    <ua.matvienko_apps.horoscope.DatePreference
-        android:key="birthday_date"
-        android:title="Дата рождения"
+    <ua.matvienko_apps.horoscope.classes.DatePreference
+        android:key="@string/pref_birthday_date"
+        android:title="@string/pref_birthday_date_title"
         android:persistent="true"/>
 
     <PreferenceCategory android:layout="@layout/preference_category"/>

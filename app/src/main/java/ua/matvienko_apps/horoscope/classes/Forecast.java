@@ -1,4 +1,4 @@
-package ua.matvienko_apps.horoscope;
+package ua.matvienko_apps.horoscope.classes;
 
 /**
  * Created by Alexandr on 01/04/2017.

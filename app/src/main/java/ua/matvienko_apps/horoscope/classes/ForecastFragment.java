@@ -1,4 +1,4 @@
-package ua.matvienko_apps.horoscope;
+package ua.matvienko_apps.horoscope.classes;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
+import ua.matvienko_apps.horoscope.R;
 import ua.matvienko_apps.horoscope.data.DataProvider;
 
 /**

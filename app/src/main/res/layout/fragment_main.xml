@@ -188,22 +188,16 @@
             android:id="@+id/linearLayout2">
 
             <ImageView
-                android:id="@+id/like_btn"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@color/colorAccent" />
-
-            <ImageView
                 android:id="@+id/copy_to_clipboard_btn"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginLeft="198dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="235dp"
                 android:background="@drawable/ic_copy" />
 
             <ImageView
                 android:id="@+id/share_btn"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="25dp"
                 android:background="@drawable/ic_share" />
 

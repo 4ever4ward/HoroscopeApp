@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import ua.matvienko_apps.horoscope.data.DataProvider;
 
@@ -52,8 +51,6 @@ public class SplashActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
 
             Intent intent;
-
-            Log.e(TAG, "SplashActivity: onPostExecute: " + visited);
 
             if (visited) {
                 intent = new Intent(context, MainActivity.class);

@@ -26,8 +26,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import ua.matvienko_apps.horoscope.Forecast;
 import ua.matvienko_apps.horoscope.Utility;
+import ua.matvienko_apps.horoscope.classes.Forecast;
 
 /**
  * Created by alex_ on 04-Apr-17.
@@ -42,6 +42,8 @@ public class DataProvider {
     private final String PARAM_UUID = "uuid";
     private final String PARAM_SIGN = "sign";
     private final String PARAM_DOB = "dob";
+    private final String PARAM_NOT_TIME = "notification_time";
+    private final String PARAM_NOT_STATUS = "notification_status";
 
 
     public static final String SIGN = "sign";
@@ -81,6 +83,30 @@ public class DataProvider {
         }
 
         return true;
+    }
+
+    public void changeSettings(String sign, String dob, String not_time, String not_status) {
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(API_URL + "settings");
+
+        try {
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+            nameValuePairs.add(new BasicNameValuePair(PARAM_UUID, Utility.getUUID(context)));
+            nameValuePairs.add(new BasicNameValuePair(PARAM_SIGN, sign));
+            nameValuePairs.add(new BasicNameValuePair(PARAM_DOB, dob));
+            nameValuePairs.add(new BasicNameValuePair(PARAM_NOT_TIME, not_time));
+            nameValuePairs.add(new BasicNameValuePair(PARAM_NOT_STATUS, not_status));
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            // Execute HTTP Post Request
+            HttpResponse response = httpClient.execute(httpPost);
+            String settingsJsonStr = inputStreamToString(response.getEntity().getContent());
+
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getSettings(String param) {
@@ -133,9 +159,8 @@ public class DataProvider {
 
             HttpResponse response = httpClient.execute(httpPost);
             String forecastJsonStr = inputStreamToString(response.getEntity().getContent());
-            parseForecastJson(forecastJsonStr, sign);
 
-            Log.e("dskfjskljf", "getForecast: " + forecastJsonStr.substring(forecastJsonStr.length() - 200) );
+            parseForecastJson(forecastJsonStr, sign);
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -202,6 +227,7 @@ public class DataProvider {
                 .getJSONObject(RESPONSE)
                 .getJSONObject(HOROSCOP);
 
+        Log.e("fsdfsf", "parseForecastJson: " + horoscopJsonObj.getJSONObject(TODAY).getString("text"));
 
         readForecastObj(horoscopJsonObj.getJSONObject(YEAR), YEAR, sign);
         readForecastObj(horoscopJsonObj.getJSONObject(MONTH), MONTH, sign);
@@ -282,6 +308,8 @@ public class DataProvider {
 
         ContentValues contentValues = new ContentValues();
 
+        if (newForecast.getForecastPeriod().equals(Forecast.TODAY));
+
         contentValues.put(AppDBContract.ForecastEntries.COLUMN_TEXT, newForecast.getText());
         contentValues.put(AppDBContract.ForecastEntries.COLUMN_BUSINESS, newForecast.getValueBusiness());
         contentValues.put(AppDBContract.ForecastEntries.COLUMN_LOVE, newForecast.getValueLove());
@@ -296,7 +324,7 @@ public class DataProvider {
                 AppDBContract.ForecastEntries.COLUMN_PERIOD + " = ? AND "
                         + AppDBContract.ForecastEntries.COLUMN_SIGN + " = ? ", new String[]{
                         newForecast.getForecastPeriod(),
-                        newForecast.getForecastPeriod()});
+                        newForecast.getSign()});
 
         db.close();
     }

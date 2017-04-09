@@ -1,4 +1,4 @@
-package ua.matvienko_apps.horoscope;
+package ua.matvienko_apps.horoscope.classes;
 
 /**
  * Created by Alexandr on 07/04/2017.
@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
+
+import ua.matvienko_apps.horoscope.R;
+import ua.matvienko_apps.horoscope.Utility;
 
 
 public class DatePreference extends DialogPreference {

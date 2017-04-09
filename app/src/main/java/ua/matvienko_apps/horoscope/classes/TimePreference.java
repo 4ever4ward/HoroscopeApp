@@ -1,4 +1,4 @@
-package ua.matvienko_apps.horoscope;
+package ua.matvienko_apps.horoscope.classes;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,6 +12,8 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import ua.matvienko_apps.horoscope.R;
 
 public class TimePreference extends DialogPreference {
     private int lastHour = 0;

@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.NumberPicker;
 import java.lang.reflect.Field;
 import java.util.Calendar;
 
+import ua.matvienko_apps.horoscope.NotificationService;
 import ua.matvienko_apps.horoscope.R;
 import ua.matvienko_apps.horoscope.Utility;
 import ua.matvienko_apps.horoscope.data.DataProvider;
@@ -49,8 +51,9 @@ public class HelloActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 int year = brdDatePicker.getYear();
-                int month = brdDatePicker.getMonth() + 1;
+                int month = brdDatePicker.getMonth();
                 int day = brdDatePicker.getDayOfMonth();
+
 
                 editor.putInt(BRD_YEAR, year);
                 editor.putInt(BRD_MONTH, month);
@@ -60,12 +63,27 @@ public class HelloActivity extends AppCompatActivity {
 
                 editor.apply();
 
-                new SignIn(HelloActivity.this, year, month, day).execute();
 
-                Log.e("fsfjhsdkfj", "onClick: " + month);
+                new SignIn(HelloActivity.this, year, month, day).execute();
 
             }
         });
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(HelloActivity.this);
+
+        //Start notification at spec time
+        String dobStr = prefs.getString(getString(R.string.pref_notification_time), "8:30");
+        String[] dobArr = dobStr.split(":");
+
+        Calendar time = Calendar.getInstance();
+
+        time.set(Calendar.HOUR_OF_DAY, Integer.parseInt(dobArr[0]));
+        time.set(Calendar.MINUTE, Integer.parseInt(dobArr[1]));
+        time.set(Calendar.SECOND, 0);
+
+
+        NotificationService.setServiceAlarm(HelloActivity.this, true, time);
+        /////////////////////////////////////////////////////////////////
 
     }
 
@@ -95,9 +113,6 @@ public class HelloActivity extends AppCompatActivity {
 
             signed = dataProvider.signIn(Utility.getZodiacName(brd_month, brd_day),
                     calendar.getTime());
-
-            Log.e("fsfjhsdkfj", "brdmonth: " + brd_month);
-
 
             return null;
         }

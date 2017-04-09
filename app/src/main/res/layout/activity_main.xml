@@ -9,12 +9,6 @@
     android:fitsSystemWindows="true"
     tools:context="ua.matvienko_apps.horoscope.activities.MainActivity">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -71,9 +65,24 @@
             android:layout_height="wrap_content"
             app:tabMode="scrollable"
             app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
-            app:tabTextColor="@android:color/white" />
+            app:tabTextColor="@android:color/white"/>
 
     </android.support.design.widget.AppBarLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="@string/banner_ad_unit_id" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="40dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
 </android.support.design.widget.CoordinatorLayout>

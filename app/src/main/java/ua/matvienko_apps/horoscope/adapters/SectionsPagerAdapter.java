@@ -1,8 +1,11 @@
-package ua.matvienko_apps.horoscope;
+package ua.matvienko_apps.horoscope.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import ua.matvienko_apps.horoscope.classes.Forecast;
+import ua.matvienko_apps.horoscope.classes.ForecastFragment;
 
 /**
  * Created by Alexandr on 05/04/2017.
