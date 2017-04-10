@@ -96,6 +96,7 @@ public class HelloActivity extends AppCompatActivity {
         private int brd_day;
 
         private boolean signed;
+        private boolean visited;
 
         public SignIn(Context context, int brd_year, int brd_month, int brd_day) {
             this.context = context;
@@ -114,6 +115,8 @@ public class HelloActivity extends AppCompatActivity {
             signed = dataProvider.signIn(Utility.getZodiacName(brd_month, brd_day),
                     calendar.getTime());
 
+            visited = dataProvider.isVisited();
+
             return null;
         }
 
@@ -122,7 +125,7 @@ public class HelloActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if (signed) {
+            if (signed && visited) {
                 Intent intent = new Intent(context, MainActivity.class);
                 startActivity(intent);
                 finish();

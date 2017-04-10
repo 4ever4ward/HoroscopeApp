@@ -82,7 +82,7 @@ public class DataProvider {
             e.printStackTrace();
         }
 
-        return true;
+        return isTableEmpty();
     }
 
     public void changeSettings(String sign, String dob, String not_time, String not_status) {
@@ -203,7 +203,7 @@ public class DataProvider {
             e.printStackTrace();
         }
 
-        return false;
+        return true;
     }
 
     private boolean getSuccess(String forecastJsonStr) throws JSONException {
@@ -301,6 +301,22 @@ public class DataProvider {
         db.close();
         cursor.close();
         return forecast;
+    }
+
+    private boolean isTableEmpty() {
+        SQLiteDatabase db = appDBHelper.getReadableDatabase();
+        String query = "SELECT * FROM "
+                + AppDBContract.ForecastEntries.TABLE_NAME;
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            return true;
+        }
+
+        db.close();
+        cursor.close();
+        return false;
     }
 
     private void updateForecast(Forecast newForecast) {
