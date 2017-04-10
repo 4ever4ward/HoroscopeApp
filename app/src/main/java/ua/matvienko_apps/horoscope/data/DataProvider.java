@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -203,7 +202,7 @@ public class DataProvider {
             e.printStackTrace();
         }
 
-        return true;
+        return false;
     }
 
     private boolean getSuccess(String forecastJsonStr) throws JSONException {
@@ -226,8 +225,6 @@ public class DataProvider {
         JSONObject horoscopJsonObj = new JSONObject(forecastJsonStr)
                 .getJSONObject(RESPONSE)
                 .getJSONObject(HOROSCOP);
-
-        Log.e("fsdfsf", "parseForecastJson: " + horoscopJsonObj.getJSONObject(TODAY).getString("text"));
 
         readForecastObj(horoscopJsonObj.getJSONObject(YEAR), YEAR, sign);
         readForecastObj(horoscopJsonObj.getJSONObject(MONTH), MONTH, sign);

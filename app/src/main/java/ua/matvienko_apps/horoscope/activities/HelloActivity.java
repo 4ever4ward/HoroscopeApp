@@ -69,21 +69,6 @@ public class HelloActivity extends AppCompatActivity {
             }
         });
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(HelloActivity.this);
-
-        //Start notification at spec time
-        String dobStr = prefs.getString(getString(R.string.pref_notification_time), "8:30");
-        String[] dobArr = dobStr.split(":");
-
-        Calendar time = Calendar.getInstance();
-
-        time.set(Calendar.HOUR_OF_DAY, Integer.parseInt(dobArr[0]));
-        time.set(Calendar.MINUTE, Integer.parseInt(dobArr[1]));
-        time.set(Calendar.SECOND, 0);
-
-
-        NotificationService.setServiceAlarm(HelloActivity.this, true, time);
-        /////////////////////////////////////////////////////////////////
 
     }
 
@@ -125,9 +110,28 @@ public class HelloActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if (signed && visited) {
+            if (signed || visited) {
                 Intent intent = new Intent(context, MainActivity.class);
                 startActivity(intent);
+
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(HelloActivity.this);
+
+
+                //Start notification at spec time
+                String dobStr = prefs.getString(getString(R.string.pref_notification_time), "8:30");
+                String[] dobArr = dobStr.split(":");
+
+                Calendar time = Calendar.getInstance();
+
+                time.set(Calendar.HOUR_OF_DAY, Integer.parseInt(dobArr[0]));
+                time.set(Calendar.MINUTE, Integer.parseInt(dobArr[1]));
+                time.set(Calendar.SECOND, 0);
+
+
+
+                NotificationService.setServiceAlarm(HelloActivity.this, true, time);
+                /////////////////////////////////////////////////////////////////
+
                 finish();
             }
 
