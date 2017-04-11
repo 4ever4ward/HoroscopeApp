@@ -26,6 +26,8 @@ public class NotificationService extends IntentService {
     private static final String TAG = NotificationService.class.getSimpleName();
     private Forecast forecast;
 
+    private static Calendar calendar;
+
     public NotificationService() {
         super(TAG);
     }
@@ -45,7 +47,10 @@ public class NotificationService extends IntentService {
         forecast = dataProvider.getForecast(Forecast.TODAY, Utility.getZodiacName(month, day));
 
 
-        showNotification(forecast);
+
+        if (calendar.get(Calendar.MINUTE) == Calendar.getInstance().get(Calendar.MINUTE) &&
+                calendar.get(Calendar.HOUR_OF_DAY) == Calendar.getInstance().get(Calendar.HOUR_OF_DAY))
+            showNotification(forecast);
     }
 
     private void showNotification(Forecast forecast) {
@@ -70,6 +75,7 @@ public class NotificationService extends IntentService {
 
     public static void setServiceAlarm(Context context, boolean isOn, Calendar time) {
         Intent intent = new Intent(context, NotificationService.class);
+        calendar = time;
         PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, 0);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);

@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -23,14 +24,13 @@ import ua.matvienko_apps.horoscope.R;
 import ua.matvienko_apps.horoscope.Utility;
 import ua.matvienko_apps.horoscope.data.DataProvider;
 
-/**
- * Created by Alexandr on 05/04/2017.
- */
+
 
 public class SettingsActivity extends PreferenceActivity {
 
     private AppCompatDelegate mDelegate;
-    private AdView adView;
+    SharedPreferences.OnSharedPreferenceChangeListener listener;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class SettingsActivity extends PreferenceActivity {
 
 
         // Load an ad into the AdMob banner view.
-        adView = (AdView) findViewById(R.id.adView);
+        AdView adView = (AdView) findViewById(R.id.adView);
 
         AdRequest adRequest = new AdRequest.Builder()
                 .setRequestAgent("android_studio:ad_template").build();
@@ -61,76 +61,86 @@ public class SettingsActivity extends PreferenceActivity {
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, new PrefsFragment()).commit();
 
-        PreferenceManager.getDefaultSharedPreferences(this).
-                registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-                    @Override
-                    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    }
 
-                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
+    @Override
+    public void onResume() {
+        super.onResume();
+        listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+                Log.e("hello", "onSharedPreferenceChanged: ");
 
-                        String dob_str = preferences.getString(getString(R.string.pref_birthday_date), "01.01.1990");
+                String dob_str = preferences.getString(getString(R.string.pref_birthday_date), "01.01.1990");
 
-                        String not_time_str = preferences.getString(getString(R.string.pref_notification_time), "8:30");
-                        String not_status = "1";
+                String not_time_str = preferences.getString(getString(R.string.pref_notification_time), "8:30");
+                String not_status = "1";
 
-                        if (!preferences.getBoolean(getString(R.string.pref_notification_switch), true))
-                            not_status = "0";
+                if (!preferences.getBoolean(getString(R.string.pref_notification_switch), true))
+                    not_status = "0";
 
-                        int day = Integer.parseInt(dob_str.split("\\.")[0]);
-                        int month = Integer.parseInt(dob_str.split("\\.")[1]) - 1;
+                int day = Integer.parseInt(dob_str.split("\\.")[0]);
+                int month = Integer.parseInt(dob_str.split("\\.")[1]) - 1;
 
-                        String sign = Utility.getZodiacName(month, day);
+                String sign = Utility.getZodiacName(month, day);
 
-                        new changeSettings(sign, dob_str, not_time_str, not_status).execute();
+                new changeSettings(sign, dob_str, not_time_str, not_status).execute();
 
-                        switch (key) {
-                            case "notification_switch":
+                switch (key) {
+                    case "notification_switch":
 
-                                //Start notification at spec time
-                                String timeStr = preferences.getString(getString(R.string.pref_notification_time), "8:30");
-                                String[] timeArr = timeStr.split(":");
+                        //Start notification at spec time
+                        String timeStr = preferences.getString(getString(R.string.pref_notification_time), "8:30");
+                        String[] timeArr = timeStr.split(":");
 
-                                Calendar calendar = Calendar.getInstance();
+                        Calendar calendar = Calendar.getInstance();
 
-                                calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArr[0]));
-                                calendar.set(Calendar.MINUTE, Integer.parseInt(timeArr[1]));
-                                calendar.set(Calendar.SECOND, 0);
+                        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArr[0]));
+                        calendar.set(Calendar.MINUTE, Integer.parseInt(timeArr[1]));
+                        calendar.set(Calendar.SECOND, 0);
 
-                                if (!preferences.getBoolean(getString(R.string.pref_notification_switch), true)) {
-                                    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                                    notificationManager.cancelAll();
-                                } else {
-                                    NotificationService.setServiceAlarm(SettingsActivity.this, true, calendar);
-                                }
-                                break;
+                        if (!preferences.getBoolean(getString(R.string.pref_notification_switch), true)) {
+                            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                            notificationManager.cancelAll();
 
-                            case "notification_time":
-
-                                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                                notificationManager.cancelAll();
-
-                                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
-
-                                //Start notification at spec time
-                                String dobStr = prefs.getString(getString(R.string.pref_notification_time), "8:30");
-                                String[] dobArr = dobStr.split(":");
-
-                                Calendar time = Calendar.getInstance();
-
-                                time.set(Calendar.HOUR_OF_DAY, Integer.parseInt(dobArr[0]));
-                                time.set(Calendar.MINUTE, Integer.parseInt(dobArr[1]));
-                                time.set(Calendar.SECOND, 0);
-
-
-                                NotificationService.setServiceAlarm(SettingsActivity.this, true, time);
-                                /////////////////////////////////////////////////////////////////
-
-                                break;
+                        } else {
+                            NotificationService.setServiceAlarm(SettingsActivity.this, true, calendar);
 
                         }
+                        break;
 
-                    }
-                });
+                    case "notification_time":
+
+                        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                        notificationManager.cancelAll();
+
+                        //Start notification at spec time
+                        String dobStr = preferences.getString(getString(R.string.pref_notification_time), "8:30");
+                        String[] dobArr = dobStr.split(":");
+
+                        Calendar time = Calendar.getInstance();
+
+                        time.set(Calendar.HOUR_OF_DAY, Integer.parseInt(dobArr[0]));
+                        time.set(Calendar.MINUTE, Integer.parseInt(dobArr[1]));
+                        time.set(Calendar.SECOND, 0);
+
+                        if (preferences.getBoolean(getString(R.string.pref_notification_switch), true))
+                            NotificationService.setServiceAlarm(SettingsActivity.this, true, time);
+                        /////////////////////////////////////////////////////////////////
+
+                        break;
+
+                }
+            }
+        };
+
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(listener);
+
+    }
+
+    @Override
+    public void onPause() {
+        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(listener);
+        super.onPause();
     }
 
     public class PrefsFragment extends PreferenceFragment {
@@ -142,6 +152,7 @@ public class SettingsActivity extends PreferenceActivity {
 
 
             addPreferencesFromResource(R.xml.app_preferences);
+
 
         }
     }
@@ -164,7 +175,7 @@ public class SettingsActivity extends PreferenceActivity {
         private String not_time_str;
         private String not_status;
 
-        public changeSettings(String sign, String dob_str, String not_time_str, String not_status) {
+        changeSettings(String sign, String dob_str, String not_time_str, String not_status) {
             this.sign = sign;
             this.dob_str = dob_str;
             this.not_time_str = not_time_str;

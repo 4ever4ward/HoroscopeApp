@@ -1,23 +1,24 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
-
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
-
-    <style name="TabStyle" parent="AppTheme">
-        <item name="colorAccent">@color/colorBusiness</item>
-    </style>
-
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="HelloTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 
 
@@ -25,13 +26,15 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-
-    <style name="MyTabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textAllCaps">true</item>
+    <style name="SwitchTextAppearance" parent="@android:style/TextAppearance.Holo.Small">
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
-    <style name="SplashStyle" parent="AppTheme">
+    <style name="MyTabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="android:textSize">@dimen/tabTextSize</item>
+    </style>
+
+    <style name="SplashStyle" parent="AppTheme.NoActionBar">
         <item name="android:background">@drawable/splash</item>
     </style>
 
@@ -43,6 +46,17 @@
 
     <style name="PrefsTheme" parent="AppTheme.NoActionBar">
         <item name="android:windowBackground">@drawable/background</item>
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorBlueRectDark</item>
+        <item name="android:buttonBarButtonStyle">@style/ButtonStyle</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+    </style>
+
+    <style name="ButtonStyle" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/colorBlueRectDark</item>
     </style>
 
     <style name="CustomAlertDialogStyle">
@@ -57,5 +71,7 @@
         <item name="android:topBright">@android:color/transparent</item>
         <item name="android:topDark">@android:color/transparent</item>
     </style>
+
+
 
 </resources>

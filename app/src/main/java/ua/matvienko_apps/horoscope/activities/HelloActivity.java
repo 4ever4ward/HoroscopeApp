@@ -27,6 +27,7 @@ import ua.matvienko_apps.horoscope.data.DataProvider;
 public class HelloActivity extends AppCompatActivity {
 
     private DatePicker brdDatePicker;
+    SharedPreferences prefs;
 
     public static final String BRD_YEAR = "year";
     public static final String BRD_MONTH = "month";
@@ -38,6 +39,7 @@ public class HelloActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hello);
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(HelloActivity.this);
         SharedPreferences sharedPreferences = getSharedPreferences(SplashActivity.APP_PREFERENCES, Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -83,7 +85,7 @@ public class HelloActivity extends AppCompatActivity {
         private boolean signed;
         private boolean visited;
 
-        public SignIn(Context context, int brd_year, int brd_month, int brd_day) {
+        SignIn(Context context, int brd_year, int brd_month, int brd_day) {
             this.context = context;
             this.dataProvider = new DataProvider(context);
             this.brd_year = brd_year;
@@ -100,6 +102,11 @@ public class HelloActivity extends AppCompatActivity {
             signed = dataProvider.signIn(Utility.getZodiacName(brd_month, brd_day),
                     calendar.getTime());
 
+
+            prefs.edit().putString(getString(R.string.pref_birthday_date),
+                    brd_day + "." + (brd_month) + "." + brd_year).apply();
+
+
             visited = dataProvider.isVisited();
 
             return null;
@@ -113,8 +120,6 @@ public class HelloActivity extends AppCompatActivity {
             if (signed || visited) {
                 Intent intent = new Intent(context, MainActivity.class);
                 startActivity(intent);
-
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(HelloActivity.this);
 
 
                 //Start notification at spec time

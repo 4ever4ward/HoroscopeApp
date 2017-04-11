@@ -4,4 +4,9 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
+
+    <dimen name="forecastFontSize">20dp</dimen>
+    <dimen name="imageButtonSize">33dp</dimen>
+    <dimen name="spinnerItemTextSize">20dp</dimen>
+    <dimen name="tabTextSize">16dp</dimen>
 </resources>

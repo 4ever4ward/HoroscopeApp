@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -28,9 +29,6 @@ import java.util.List;
 import ua.matvienko_apps.horoscope.Utility;
 import ua.matvienko_apps.horoscope.classes.Forecast;
 
-/**
- * Created by alex_ on 04-Apr-17.
- */
 
 public class DataProvider {
 
@@ -63,7 +61,7 @@ public class DataProvider {
         HttpPost httpPost = new HttpPost(API_URL + "horoscop");
 
         try {
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+            List<NameValuePair> nameValuePairs = new ArrayList<>(1);
             nameValuePairs.add(new BasicNameValuePair(PARAM_UUID, Utility.getUUID(context)));
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -158,6 +156,9 @@ public class DataProvider {
 
             HttpResponse response = httpClient.execute(httpPost);
             String forecastJsonStr = inputStreamToString(response.getEntity().getContent());
+
+            if (sign.equals(Forecast.LEO))
+                Log.e("LEO", "getForecast: " + forecastJsonStr);
 
             parseForecastJson(forecastJsonStr, sign);
 
@@ -320,8 +321,6 @@ public class DataProvider {
         SQLiteDatabase db = appDBHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-
-        if (newForecast.getForecastPeriod().equals(Forecast.TODAY));
 
         contentValues.put(AppDBContract.ForecastEntries.COLUMN_TEXT, newForecast.getText());
         contentValues.put(AppDBContract.ForecastEntries.COLUMN_BUSINESS, newForecast.getValueBusiness());

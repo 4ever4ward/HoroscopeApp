@@ -10,6 +10,14 @@
     <string name="pref_birthday_date_title">Дата рождения</string>
 
     <string name="banner_ad_unit_id">ca-app-pub-5557077775380446/8336576218</string>
+    <string name="business_string">БИЗНЕС</string>
+    <string name="love_string">ЛЮБОВЬ</string>
+    <string name="health_string">ЗДОРОВЬЕ</string>
+    <string name="hello_string_part_1">Здравствуйте!</string>
+    <string name="hello_string_part_2">Мы составим гороскоп персонально для вас</string>
+    <string name="hello_string_part_3">Дата вашего рождения:</string>
+    <string name="btn_next_string">Продолжить</string>
+    <string name="copy_to_clipboard_string">Скопировано в буфер обмена</string>
 
 
     <!--Spinner entries-->

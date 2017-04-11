@@ -27,9 +27,8 @@
         <TextView
             android:layout_width="135dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
             android:textColor="@android:color/white"
-            android:text="Скопировано в буфер обмена"/>
+            android:text="@string/copy_to_clipboard_string"/>
 
     </LinearLayout>
 

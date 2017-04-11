@@ -10,7 +10,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,6 +19,9 @@ import android.widget.Spinner;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.util.Calendar;
+
+import ua.matvienko_apps.horoscope.NotificationService;
 import ua.matvienko_apps.horoscope.R;
 import ua.matvienko_apps.horoscope.Utility;
 import ua.matvienko_apps.horoscope.adapters.SectionsPagerAdapter;
@@ -91,13 +93,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ArrayAdapter<?> adapter =
-                ArrayAdapter.createFromResource(this, R.array.spinner_signs, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                ArrayAdapter.createFromResource(this, R.array.spinner_signs, R.layout.spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_popup_item);
         signSpinner.setAdapter(adapter);
 
         userSign = sharedPreferences.getString(HelloActivity.SIGN, "");
-
-
 
 
         // Sync Settings with api
@@ -181,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
             editor.putString(getString(R.string.pref_notification_time), not_time);
             editor.putString(getString(R.string.pref_birthday_date), formatDateString(dob_str));
 
-//            Log.e(TAG, "doInBackground: " + dob_str );
 
             editor.apply();
 
@@ -217,10 +216,19 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         String date = prefs.getString(getString(R.string.pref_birthday_date), "01.01.1990");
 
-        Log.e(TAG, "onCreate: " + date );
-
         int month = Integer.parseInt(date.split("\\.")[1]) + 1;
         int day = Integer.parseInt(date.split("\\.")[0]);
+
+        String dobStr = prefs.getString(getString(R.string.pref_notification_time), "8:30");
+        String[] dobArr = dobStr.split(":");
+
+        Calendar time = Calendar.getInstance();
+
+        time.set(Calendar.HOUR_OF_DAY, Integer.parseInt(dobArr[0]));
+        time.set(Calendar.MINUTE, Integer.parseInt(dobArr[1]));
+        time.set(Calendar.SECOND, 0);
+
+        NotificationService.setServiceAlarm(MainActivity.this, true, time);
 
         signSpinner.setSelection(getZodiacPosition(Utility.getZodiacName(month, day)));
 

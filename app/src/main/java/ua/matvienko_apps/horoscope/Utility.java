@@ -8,9 +8,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-/**
- * Created by Alexandr on 04/04/2017.
- */
 
 public class Utility {
 
@@ -26,7 +23,6 @@ public class Utility {
 
         uuid = "{ "
                 + "\"bundle_id\":" +  "\"" + bundle_id + "\"" + ","
-                //TODO: change uuid
                 + "\"unique_id\":" + "\"" + device_uuid + "\"" + ","
                 + "\"user_agent\":" + "\"" + user_agent + "\"" + ","
                 + "\"time_zone\":" + "\"" + time_zone + "\"" + ","

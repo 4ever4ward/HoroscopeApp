@@ -7,58 +7,68 @@
     android:background="@drawable/background"
     tools:context="ua.matvienko_apps.horoscope.activities.HelloActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:textColor="@android:color/white"
-        android:text="Здравствуйте!"/>
+        android:orientation="vertical"
+        android:layout_gravity="center">
 
-    <TextView
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:layout_marginTop="120dp"
-        android:textColor="@android:color/white"
-        android:text="Мы составим гороскоп персонально для вас"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:text="@string/hello_string_part_1"
+            android:textColor="@android:color/white"
+            android:textSize="24sp" />
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:layout_marginTop="200dp"
-        android:textColor="@android:color/white"
-        android:text="Дата вашего рождения:"/>
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:text="@string/hello_string_part_2"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
 
-    <DatePicker
-        android:id="@+id/brdDatePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:calendarViewShown="false"
-        android:layout_marginTop="35dp"
-        android:datePickerMode="spinner"
-        android:spinnersShown="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:text="@string/hello_string_part_3"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <DatePicker
+            android:id="@+id/brdDatePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:calendarTextColor="@android:color/white"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            android:spinnersShown="true" />
 
 
-    <Button
-        android:id="@+id/nextBtn"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="205dp"
-        android:background="@drawable/button_next"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:text="Продолжить" />
+        <Button
+            android:id="@+id/nextBtn"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/button_next"
+            android:text="@string/btn_next_string"
+            android:textColor="@android:color/white"
+            android:textSize="17sp" />
+
+    </LinearLayout>
 
 
 </FrameLayout>

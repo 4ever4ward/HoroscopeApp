@@ -21,7 +21,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="50dp"
             android:background="@color/colorPrimary">
 
             <FrameLayout
@@ -63,9 +63,10 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             app:tabMode="scrollable"
             app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
-            app:tabTextColor="@android:color/white"/>
+            app:tabTextColor="@android:color/white" />
 
     </android.support.design.widget.AppBarLayout>
 

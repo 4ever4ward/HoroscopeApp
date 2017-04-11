@@ -22,9 +22,7 @@ import java.util.Locale;
 import ua.matvienko_apps.horoscope.R;
 import ua.matvienko_apps.horoscope.data.DataProvider;
 
-/**
- * Created by Alexandr on 05/04/2017.
- */
+
 
 public class ForecastFragment extends Fragment {
 
@@ -93,7 +91,7 @@ public class ForecastFragment extends Fragment {
                 clipboard.setPrimaryClip(clip);
 
                 Toast toast = new Toast(getContext());
-                toast.setGravity(Gravity.BOTTOM, 0, 300);
+                toast.setGravity(Gravity.BOTTOM, 0, 330);
                 toast.setDuration(Toast.LENGTH_SHORT);
                 toast.setView(layout);
                 toast.show();
@@ -115,7 +113,7 @@ public class ForecastFragment extends Fragment {
         private String sign;
         private String period;
 
-        public getForecastTask(Context context, String period, String sign) {
+        getForecastTask(Context context, String period, String sign) {
             dataProvider = new DataProvider(context);
             this.period = period;
             this.sign = sign;
