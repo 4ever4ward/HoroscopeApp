@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -49,7 +51,7 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -83,11 +85,18 @@ public class ForecastFragment extends Fragment {
         copyToClipBoardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                View layout = inflater.inflate(R.layout.toast_layout, null);
+
                 ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("", forecastTextView.getText().toString());
                 clipboard.setPrimaryClip(clip);
 
-                //TODO: show toast
+                Toast toast = new Toast(getContext());
+                toast.setGravity(Gravity.BOTTOM, 0, 300);
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.setView(layout);
+                toast.show();
             }
         });
 
@@ -132,7 +141,7 @@ public class ForecastFragment extends Fragment {
                 healthProgressBar.setProgress(forecast.getValueHealth());
 
             } else {
-                forecastTextView.setText("NO INTERNET");
+                forecastTextView.setText("Отсутствует подключение к Интернету");
 
                 businessProgressBar.setProgress(0);
                 loveProgressBar.setProgress(0);

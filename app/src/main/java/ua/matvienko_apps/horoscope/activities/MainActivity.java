@@ -166,6 +166,10 @@ public class MainActivity extends AppCompatActivity {
             DataProvider dataProvider = new DataProvider(MainActivity.this);
 
             String dob_str = dataProvider.getSettings(DataProvider.DOB);
+
+            if (dob_str.equals(""))
+                return null;
+
             String not_time = dataProvider.getSettings(DataProvider.NOT_TIME);
             int not_status = Integer.parseInt(dataProvider.getSettings(DataProvider.NOT_STATUS));
 
