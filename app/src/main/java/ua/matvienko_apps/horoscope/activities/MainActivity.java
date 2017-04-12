@@ -100,8 +100,7 @@ public class MainActivity extends AppCompatActivity {
         userSign = sharedPreferences.getString(HelloActivity.SIGN, "");
 
 
-        // Sync Settings with api
-        new syncSettings().execute();
+
     }
 
     private int getZodiacPosition(String name) {
@@ -186,6 +185,19 @@ public class MainActivity extends AppCompatActivity {
 
             return null;
         }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            String date = prefs.getString(getString(R.string.pref_birthday_date), "01.01.1990");
+
+            int month = Integer.parseInt(date.split("\\.")[1]) + 1;
+            int day = Integer.parseInt(date.split("\\.")[0]);
+
+            signSpinner.setSelection(getZodiacPosition(Utility.getZodiacName(month, day)));
+
+        }
     }
 
     private class getZodiac extends AsyncTask<Void, Void, Void> {
@@ -214,6 +226,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        // Sync Settings with api
+        new syncSettings().execute();
+
         String date = prefs.getString(getString(R.string.pref_birthday_date), "01.01.1990");
 
         int month = Integer.parseInt(date.split("\\.")[1]) + 1;
