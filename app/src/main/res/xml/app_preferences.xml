@@ -6,7 +6,6 @@
     <SwitchPreference
         android:key="@string/pref_notification_switch"
         android:title="@string/pref_notification_switch_title"
-        android:background="@drawable/background"
         android:persistent="true" />
 
     <PreferenceCategory android:layout="@layout/preference_category"/>
@@ -15,7 +14,7 @@
     <ua.matvienko_apps.horoscope.classes.TimePreference
         android:key="@string/pref_notification_time"
         android:title="@string/pref_notification_time_title"
-        android:persistent="true"/>
+        android:persistent="true" />
 
     <PreferenceCategory android:layout="@layout/preference_category"/>
 

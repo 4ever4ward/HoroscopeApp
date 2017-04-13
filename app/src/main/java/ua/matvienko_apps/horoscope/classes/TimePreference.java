@@ -44,6 +44,8 @@ public class TimePreference extends DialogPreference {
 
         setPositiveButtonText("Готово");
         setNegativeButtonText("Выйти");
+
+        setDialogTitle("");
     }
 
     @Override

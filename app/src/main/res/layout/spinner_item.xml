@@ -8,4 +8,4 @@
     android:textSize="@dimen/spinnerItemTextSize"
     android:textColor="@android:color/white"
     android:ellipsize="marquee"
-    android:textAlignment="inherit"/>
+    android:textAlignment="textEnd"/>

@@ -56,6 +56,8 @@ public class DatePreference extends DialogPreference {
 
         setPositiveButtonText("Готово");
         setNegativeButtonText("Выйти");
+
+        setDialogTitle("");
     }
 
     @Override
@@ -67,7 +69,6 @@ public class DatePreference extends DialogPreference {
     @Override
     protected void onBindDialogView(View v) {
         super.onBindDialogView(v);
-
         picker.init(lastYear, lastMonth, lastDay, null);
     }
 

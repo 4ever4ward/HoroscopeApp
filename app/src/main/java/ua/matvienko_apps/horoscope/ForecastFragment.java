@@ -1,9 +1,10 @@
-package ua.matvienko_apps.horoscope.classes;
+package ua.matvienko_apps.horoscope;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,11 +18,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareButton;
+
 import java.util.Locale;
 
-import ua.matvienko_apps.horoscope.R;
+import ua.matvienko_apps.horoscope.classes.Forecast;
 import ua.matvienko_apps.horoscope.data.DataProvider;
-
 
 
 public class ForecastFragment extends Fragment {
@@ -63,7 +66,7 @@ public class ForecastFragment extends Fragment {
         loveProgressBar = (ProgressBar) rootView.findViewById(R.id.love_progress_bar);
         healthProgressBar = (ProgressBar) rootView.findViewById(R.id.health_progress_bar);
 
-
+        ShareButton fbShareButton = (ShareButton) rootView.findViewById(R.id.fb_share_btn);
         ImageView copyToClipBoardView = (ImageView) rootView.findViewById(R.id.copy_to_clipboard_btn);
         ImageView shareView = (ImageView) rootView.findViewById(R.id.share_btn);
 
@@ -97,6 +100,8 @@ public class ForecastFragment extends Fragment {
                 toast.show();
             }
         });
+
+        fbShareButton.setShareContent(createShareLinkContent(forecastTextView.getText().toString()));
 
 //        Log.e(TAG, "onCreateView: " + ((Spinner) getActivity().findViewById(R.id.sign_spinner)).getSelectedItemPosition());
 
@@ -201,6 +206,15 @@ public class ForecastFragment extends Fragment {
         shareIntent.putExtra(Intent.EXTRA_TEXT, text + HASH_TAG);
 
         return shareIntent;
+    }
+
+    private ShareLinkContent createShareLinkContent(String forecast) {
+        return new ShareLinkContent.Builder()
+                .setContentTitle("Гороскоп")
+                .setContentDescription(
+                        "The 'Hello Facebook' sample  showcases simple Facebook integration")
+                .setContentUrl(Uri.parse("http://developers.facebook.com/android"))
+                .build();
     }
 
     @Override

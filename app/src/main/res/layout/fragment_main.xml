@@ -192,13 +192,21 @@
             android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
+            <com.facebook.share.widget.ShareButton
+                android:id="@+id/fb_share_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/imageButtonSize"
+                android:background="@color/colorBlue"/>
+
             <ImageView
                 android:id="@+id/copy_to_clipboard_btn"
                 android:layout_width="@dimen/imageButtonSize"
                 android:layout_height="@dimen/imageButtonSize"
                 android:layout_gravity="end"
                 android:layout_marginRight="70dp"
-                android:background="@drawable/ic_copy" />
+                android:src="@drawable/ic_copy"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"/>
 
             <ImageView
                 android:id="@+id/share_btn"
@@ -206,7 +214,9 @@
                 android:layout_height="@dimen/imageButtonSize"
                 android:layout_gravity="end"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/ic_share" />
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:src="@drawable/ic_share" />
 
 
         </FrameLayout>

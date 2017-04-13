@@ -12,17 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 import ua.matvienko_apps.horoscope.NotificationService;
 import ua.matvienko_apps.horoscope.R;
+import ua.matvienko_apps.horoscope.SignSpinnerAdapter;
 import ua.matvienko_apps.horoscope.Utility;
 import ua.matvienko_apps.horoscope.adapters.SectionsPagerAdapter;
 import ua.matvienko_apps.horoscope.classes.Forecast;
@@ -91,15 +92,15 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+//        ArrayAdapter<?> adapter =
+//                ArrayAdapter.createFromResource(this, R.array.spinner_signs, R.layout.spinner_item);
+//        adapter.setDropDownViewResource(R.layout.spinner_popup_item);
+//        signSpinner.setAdapter(adapter);
 
-        ArrayAdapter<?> adapter =
-                ArrayAdapter.createFromResource(this, R.array.spinner_signs, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_popup_item);
-        signSpinner.setAdapter(adapter);
+        signSpinner.setAdapter(new SignSpinnerAdapter(this,
+                Arrays.asList(getResources().getStringArray(R.array.spinner_signs))));
 
         userSign = sharedPreferences.getString(HelloActivity.SIGN, "");
-
-
 
     }
 

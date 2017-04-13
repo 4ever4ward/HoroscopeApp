@@ -20,6 +20,8 @@
     <string name="copy_to_clipboard_string">Скопировано в буфер обмена</string>
 
 
+    <string name="facebook_app_id">161936774331133</string>
+    
     <!--Spinner entries-->
     <string-array name="spinner_signs">
         <item>Водолей</item>

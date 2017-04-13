@@ -13,7 +13,6 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stateListAnimator="@animator/appbar_always_elevated"
         android:paddingTop="@dimen/appbar_padding_top"
         android:theme="@style/AppTheme.AppBarOverlay"
         >
@@ -21,7 +20,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:background="@color/colorPrimary">
 
             <FrameLayout
@@ -38,18 +37,22 @@
                 <Spinner
                     android:id="@+id/sign_spinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="15dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:gravity="center"
                     android:entries="@array/spinner_signs"
                     android:spinnerMode="dialog"
-                    android:textAlignment="center" />
+                    android:dropDownWidth="wrap_content"/>
 
                 <ImageView
                     android:id="@+id/settings_icon"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="5dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
                     android:layout_gravity="center_vertical|end"
                     android:layout_marginRight="15dp"
                     android:src="@drawable/ic_settings" />
