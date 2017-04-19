@@ -1,4 +1,4 @@
-package ua.matvienko_apps.horoscope;
+package ua.matvienko_apps.horoscope.adapters;
 
 
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import java.util.List;
+
+import ua.matvienko_apps.horoscope.R;
 
 
 public class SignSpinnerAdapter extends BaseAdapter implements SpinnerAdapter {

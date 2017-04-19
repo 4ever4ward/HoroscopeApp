@@ -23,7 +23,7 @@ import java.util.Calendar;
 
 import ua.matvienko_apps.horoscope.NotificationService;
 import ua.matvienko_apps.horoscope.R;
-import ua.matvienko_apps.horoscope.SignSpinnerAdapter;
+import ua.matvienko_apps.horoscope.adapters.SignSpinnerAdapter;
 import ua.matvienko_apps.horoscope.Utility;
 import ua.matvienko_apps.horoscope.adapters.SectionsPagerAdapter;
 import ua.matvienko_apps.horoscope.classes.Forecast;
@@ -244,7 +244,8 @@ public class MainActivity extends AppCompatActivity {
         time.set(Calendar.MINUTE, Integer.parseInt(dobArr[1]));
         time.set(Calendar.SECOND, 0);
 
-        NotificationService.setServiceAlarm(MainActivity.this, true, time);
+        if (prefs.getBoolean(getString(R.string.pref_notification_switch), true))
+            NotificationService.setServiceAlarm(MainActivity.this, true, time);
 
         signSpinner.setSelection(getZodiacPosition(Utility.getZodiacName(month, day)));
 

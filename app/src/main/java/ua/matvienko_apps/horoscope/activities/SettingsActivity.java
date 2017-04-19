@@ -1,6 +1,9 @@
 package ua.matvienko_apps.horoscope.activities;
 
+import android.app.AlarmManager;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -102,6 +105,12 @@ public class SettingsActivity extends PreferenceActivity {
                             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                             notificationManager.cancelAll();
 
+                            Intent intent = new Intent(SettingsActivity.this, NotificationService.class);
+                            PendingIntent pendingIntent = PendingIntent.getService(SettingsActivity.this, 0, intent, 0);
+
+                            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+                            alarmManager.cancel(pendingIntent);
                         } else {
                             NotificationService.setServiceAlarm(SettingsActivity.this, true, calendar);
 
