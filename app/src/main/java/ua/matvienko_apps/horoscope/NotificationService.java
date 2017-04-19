@@ -37,19 +37,23 @@ public class NotificationService extends IntentService {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String dob = preferences.getString("birthday_date", "01.01.1990");
+        String not_time = preferences.getString(getString(R.string.pref_notification_time), "8:30");
 
         int day = Integer.parseInt(dob.split("\\.")[0]);
         int month = Integer.parseInt(dob.split("\\.")[1]) + 1;
 
+        int hour = Integer.parseInt(not_time.split(":")[0]);
+        int minute = Integer.parseInt(not_time.split(":")[1]);
+
+        int now_hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        int now_minute = Calendar.getInstance().get(Calendar.MINUTE);
 
         DataProvider dataProvider = new DataProvider(getApplicationContext());
 
         forecast = dataProvider.getForecast(Forecast.TODAY, Utility.getZodiacName(month, day));
 
-
-
-        if (calendar.get(Calendar.MINUTE) == Calendar.getInstance().get(Calendar.MINUTE) &&
-                calendar.get(Calendar.HOUR_OF_DAY) == Calendar.getInstance().get(Calendar.HOUR_OF_DAY))
+        if (minute == now_minute &&
+                hour == now_hour)
             showNotification(forecast);
     }
 
