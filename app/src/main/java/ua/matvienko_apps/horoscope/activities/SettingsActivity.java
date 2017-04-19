@@ -143,7 +143,7 @@ public class SettingsActivity extends PreferenceActivity {
         super.onPause();
     }
 
-    public class PrefsFragment extends PreferenceFragment {
+    public static class PrefsFragment extends PreferenceFragment {
 
 
         @Override
