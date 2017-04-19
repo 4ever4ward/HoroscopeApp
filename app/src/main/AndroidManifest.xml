@@ -43,11 +43,13 @@
             android:name=".NotificationService"
             android:exported="false" />
 
+        <provider android:authorities="com.facebook.app.FacebookContentProvider161936774331133"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+
     </application>
 
-    <provider android:authorities="com.facebook.app.FacebookContentProvider161936774331133"
-        android:name="com.facebook.FacebookContentProvider"
-        android:exported="true"/>
+
 
 
 </manifest>
