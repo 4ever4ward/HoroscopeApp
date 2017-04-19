@@ -39,6 +39,7 @@
 
     <style name="SplashStyle" parent="AppTheme.NoActionBar">
         <item name="android:background">@drawable/splash</item>
+        <item name="colorPrimaryDark">@color/colorSplashPrimaryDark</item>
     </style>
 
     <style name="Divider">

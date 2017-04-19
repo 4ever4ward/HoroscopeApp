@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#232a50</color>
     <color name="colorAccent">#969bb3</color>
 
+    <color name="colorSplashPrimaryDark">#05213b</color>
+
     <color name="colorBusiness">#8fa0ff</color>
     <color name="colorLove">#ff7167</color>
     <color name="colorHealth">#beff74</color>
