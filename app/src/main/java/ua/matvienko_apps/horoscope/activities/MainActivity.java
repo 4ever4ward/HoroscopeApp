@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private AdView adView;
 
 
+    String app_link;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,10 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-//        ArrayAdapter<?> adapter =
-//                ArrayAdapter.createFromResource(this, R.array.spinner_signs, R.layout.spinner_item);
-//        adapter.setDropDownViewResource(R.layout.spinner_popup_item);
-//        signSpinner.setAdapter(adapter);
 
         signSpinner.setAdapter(new SignSpinnerAdapter(this,
                 Arrays.asList(getResources().getStringArray(R.array.spinner_signs))));
@@ -171,6 +169,8 @@ public class MainActivity extends AppCompatActivity {
                 return null;
 
             String not_time = dataProvider.getSettings(DataProvider.NOT_TIME);
+            app_link = dataProvider.getSettings(DataProvider.APP_LINK);
+
             int not_status = Integer.parseInt(dataProvider.getSettings(DataProvider.NOT_STATUS));
 
             if (not_status == 1) {
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
             }
             editor.putString(getString(R.string.pref_notification_time), not_time);
             editor.putString(getString(R.string.pref_birthday_date), formatDateString(dob_str));
-
+            editor.putString(getString(R.string.pref_app_link), app_link);
 
             editor.apply();
 
@@ -197,7 +197,6 @@ public class MainActivity extends AppCompatActivity {
             int day = Integer.parseInt(date.split("\\.")[0]);
 
             signSpinner.setSelection(getZodiacPosition(Utility.getZodiacName(month, day)));
-
         }
     }
 

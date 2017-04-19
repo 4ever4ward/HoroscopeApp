@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -42,7 +41,7 @@ public class DataProvider {
     private final String PARAM_NOT_TIME = "notification_time";
     private final String PARAM_NOT_STATUS = "notification_status";
 
-
+    public static final String APP_LINK = "app_link";
     public static final String SIGN = "sign";
     public static final String NOT_TIME = "notification_time";
     public static final String NOT_STATUS = "notification_status";
@@ -156,9 +155,6 @@ public class DataProvider {
 
             HttpResponse response = httpClient.execute(httpPost);
             String forecastJsonStr = inputStreamToString(response.getEntity().getContent());
-
-            if (sign.equals(Forecast.LEO))
-                Log.e("LEO", "getForecast: " + forecastJsonStr);
 
             parseForecastJson(forecastJsonStr, sign);
 

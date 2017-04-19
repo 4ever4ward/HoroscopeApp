@@ -1,15 +1,17 @@
 <resources>
-    <string name="app_name">Horoscope</string>
+    <string name="app_name">Гороскоп</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="pref_notification_switch">notification_switch</string>
     <string name="pref_notification_switch_title">Уведомления</string>
     <string name="pref_notification_time">notification_time</string>
     <string name="pref_notification_time_title">Время уведомлений</string>
+    <string name="pref_app_link">app_link</string>
     <string name="pref_birthday_date">birthday_date</string>
     <string name="pref_birthday_date_title">Дата рождения</string>
 
-    <string name="banner_ad_unit_id">ca-app-pub-5557077775380446/8336576218</string>
+    <string name="banner_ad_unit_id">ca-app-pub-5557077775380446/1023728210</string>
+    <string name="flurry_analytics_id">GRWZZ3QSW86DXVJWXJMZ</string>
     <string name="business_string">БИЗНЕС</string>
     <string name="love_string">ЛЮБОВЬ</string>
     <string name="health_string">ЗДОРОВЬЕ</string>

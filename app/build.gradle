@@ -4,8 +4,8 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "ua.matvienko_apps.horoscope"
-        minSdkVersion 21
+        applicationId "com.hkyaispoe"
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -33,5 +33,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:10.2.1'
     compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     compile 'com.facebook.android:facebook-android-sdk:4.21.1'
+    compile 'com.flurry.android:analytics:7.0.0@aar'
     testCompile 'junit:junit:4.12'
 }

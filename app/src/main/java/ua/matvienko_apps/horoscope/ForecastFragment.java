@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -40,6 +41,10 @@ public class ForecastFragment extends Fragment {
     private ProgressBar loveProgressBar;
     private ProgressBar healthProgressBar;
 
+    private String sign;
+    private String period;
+    private ShareButton fbShareButton;
+
     public ForecastFragment() {
     }
 
@@ -66,15 +71,15 @@ public class ForecastFragment extends Fragment {
         loveProgressBar = (ProgressBar) rootView.findViewById(R.id.love_progress_bar);
         healthProgressBar = (ProgressBar) rootView.findViewById(R.id.health_progress_bar);
 
-        ShareButton fbShareButton = (ShareButton) rootView.findViewById(R.id.fb_share_btn);
+        fbShareButton = (ShareButton) rootView.findViewById(R.id.fb_share_btn);
         ImageView copyToClipBoardView = (ImageView) rootView.findViewById(R.id.copy_to_clipboard_btn);
         ImageView shareView = (ImageView) rootView.findViewById(R.id.share_btn);
 
-        String sign =
+        sign =
                 getZodiacName(((Spinner) getActivity().findViewById(R.id.sign_spinner))
                         .getSelectedItemPosition());
 
-        String period = getArguments().getString(ARG_PERIOD);
+        period = getArguments().getString(ARG_PERIOD);
 
         shareView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,11 +106,11 @@ public class ForecastFragment extends Fragment {
             }
         });
 
-        fbShareButton.setShareContent(createShareLinkContent(forecastTextView.getText().toString()));
-
-//        Log.e(TAG, "onCreateView: " + ((Spinner) getActivity().findViewById(R.id.sign_spinner)).getSelectedItemPosition());
+        String appUrl = PreferenceManager.getDefaultSharedPreferences(getContext())
+                .getString(getString(R.string.pref_app_link), "http://google.com.ua");
 
         new getForecastTask(getContext(), period, sign).execute();
+        fbShareButton.setShareContent(createShareLinkContent(forecastTextView.getText().toString(), appUrl));
 
         return rootView;
     }
@@ -207,13 +212,11 @@ public class ForecastFragment extends Fragment {
 
         return shareIntent;
     }
-
-    private ShareLinkContent createShareLinkContent(String forecast) {
+    private ShareLinkContent createShareLinkContent(String forecast, String url) {
         return new ShareLinkContent.Builder()
-                .setContentTitle("Гороскоп")
-                .setContentDescription(
-                        "The 'Hello Facebook' sample  showcases simple Facebook integration")
-                .setContentUrl(Uri.parse("http://developers.facebook.com/android"))
+                .setContentTitle(getString(R.string.app_name))
+                .setContentDescription(forecast)
+                .setContentUrl(Uri.parse(url))
                 .build();
     }
 
