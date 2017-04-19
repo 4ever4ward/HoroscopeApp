@@ -1,8 +1,6 @@
 package ua.matvienko_apps.horoscope.classes;
 
-/**
- * Created by Alexandr on 07/04/2017.
- */
+
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -33,19 +31,19 @@ public class DatePreference extends DialogPreference {
         return li.inflate(R.layout.time_preference, parent, false);
     }
 
-    public static int getYear(String date) {
+    private static int getYear(String date) {
         String[] pieces = date.split("\\.");
 
         return (Integer.parseInt(pieces[2]));
     }
 
-    public static int getMonth(String date) {
+    private static int getMonth(String date) {
         String[] pieces = date.split("\\.");
 
         return (Integer.parseInt(pieces[1]));
     }
 
-    public static int getDay(String date) {
+    private static int getDay(String date) {
         String[] pieces = date.split("\\.");
 
         return (Integer.parseInt(pieces[0]));
@@ -53,7 +51,6 @@ public class DatePreference extends DialogPreference {
 
     public DatePreference(Context ctxt, AttributeSet attrs) {
         super(ctxt, attrs);
-
         setPositiveButtonText("Готово");
         setNegativeButtonText("Выйти");
 
@@ -102,7 +99,7 @@ public class DatePreference extends DialogPreference {
 
     @Override
     protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-        String date = null;
+        String date;
 
         if (restoreValue) {
             if (defaultValue == null) {

@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name">Гороскоп</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="app_name">Мой Гороскоп</string>
     <string name="pref_notification_switch">notification_switch</string>
     <string name="pref_notification_switch_title">Уведомления</string>
     <string name="pref_notification_time">notification_time</string>
@@ -23,7 +21,7 @@
 
 
     <string name="facebook_app_id">161936774331133</string>
-    
+
     <!--Spinner entries-->
     <string-array name="spinner_signs">
         <item>Водолей</item>

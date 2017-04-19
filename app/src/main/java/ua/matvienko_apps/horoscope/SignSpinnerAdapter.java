@@ -1,8 +1,5 @@
 package ua.matvienko_apps.horoscope;
 
-/**
- * Created by Alexandr on 13/04/2017.
- */
 
 import android.content.Context;
 import android.graphics.Color;
@@ -15,9 +12,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by Alexandr on 26/02/2017.
- */
 
 public class SignSpinnerAdapter extends BaseAdapter implements SpinnerAdapter {
 
@@ -58,6 +52,7 @@ public class SignSpinnerAdapter extends BaseAdapter implements SpinnerAdapter {
 
     public View getView(int i, View view, ViewGroup viewgroup) {
         TextView txt = new TextView(context);
+        txt.setPadding(10, 10, 10, 10);
         txt.setGravity(Gravity.CENTER);
         txt.setTextSize(20);
         txt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_down, 0);

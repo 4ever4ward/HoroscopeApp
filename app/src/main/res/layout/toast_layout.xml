@@ -16,7 +16,6 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/toast_image"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center"

@@ -7,10 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import ua.matvienko_apps.horoscope.classes.Forecast;
 import ua.matvienko_apps.horoscope.ForecastFragment;
 
-/**
- * Created by Alexandr on 05/04/2017.
- */
-
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
 
@@ -36,8 +32,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {
-
-            //TODO: Change to string resources
 
             case 0:
                 return "СЕГОДНЯ";

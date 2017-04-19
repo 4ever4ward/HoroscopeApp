@@ -43,7 +43,6 @@ public class Utility {
 
     public static String getZodiacName(int brd_month, int brd_day) {
 
-        // TODO: change string's to real constant's
         if      ((brd_month == 12 && brd_day >= 22 && brd_day <= 31) || (brd_month ==  1 && brd_day >= 1 && brd_day <= 19))
             return "capricorn";
         else if ((brd_month ==  1 && brd_day >= 20 && brd_day <= 31) || (brd_month ==  2 && brd_day >= 1 && brd_day <= 17))

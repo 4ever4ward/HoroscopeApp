@@ -49,7 +49,7 @@
 
     <style name="PrefsTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/background</item>
-        <!--<item name="colorPrimary">@android:color/white</item>-->
+        <item name="colorPrimary">@android:color/white</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@android:color/white</item>
         <item name="android:trackTint">@color/colorBusiness</item>
@@ -59,17 +59,32 @@
         <item name="android:buttonBarButtonStyle">@style/ButtonStyle</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:timePickerStyle">@style/CustomTimePickerDialogStyle</item>
         <item name="android:datePickerStyle">@style/CustomDatePickerDialogStyle</item>
     </style>
 
-    <style name="ButtonStyle" parent="Base.Widget.AppCompat.Button">
+    <style name="ButtonStyle" parent="android:Widget.Material.Light.Button">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/colorBlueRectDark</item>
     </style>
 
-    <style name="CustomDatePickerDialogStyle" parent="android:Widget.DatePicker">
+    <style name="CustomDatePickerDialogStyle" parent="android:Widget.Material.Light.DatePicker">
+        <item name="android:colorAccent">@color/colorBlueRectDark</item>
         <item name="android:datePickerMode">calendar</item>
         <item name="android:headerBackground">@color/colorBlueRectDark</item>
+
+    </style>
+
+    <style name="CustomTimePickerDialogStyle" parent="android:Widget.Material.Light.TimePicker">
+        <item name="android:numbersSelectorColor">@color/colorBlueRectDark</item>
+        <item name="android:colorAccent">@color/colorBlueRectDark</item>
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+
+        <item name="android:headerBackground">@color/colorBlueRectDark</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorPrimaryInverse">@android:color/white</item>
 
     </style>
 
